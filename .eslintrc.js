@@ -3,7 +3,6 @@ module.exports = {
         "browser": true,
         "es6": true
     },
-    "extends": "airbnb-base",
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -15,5 +14,6 @@ module.exports = {
     "rules": {
       "semi": ["error", "always"],
       "quotes": ["error", "double"]
-  }
+    },
+      "extends": "airbnb-base"
 };

@@ -1,4 +1,4 @@
-const cards = require("../data/users.json");
+const cards = require("../data/cards.json");
 
 const cardData = (req, res) => {
   res.status(200);

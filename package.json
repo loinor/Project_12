@@ -2,20 +2,26 @@
   "name": "project_12",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "dev": "nodemon app.js"
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loinor/Project_12.git"
   },
   "author": "Guskov Viacheslav",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loinor/Project_12/issues"
+  },
+  "homepage": "https://github.com/loinor/Project_12#readme",
   "devDependencies": {
     "eslint": "^6.5.1",
-    "nodemon": "^1.19.3",
-    "webpack-dev-server": "^3.8.2"
+    "eslint-config-airbnb-base": "^14.0.0",
+    "nodemon": "^1.19.3"
   },
   "dependencies": {
-    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "express": "^4.17.1"
   }
