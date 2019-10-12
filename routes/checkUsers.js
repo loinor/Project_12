@@ -1,18 +1,15 @@
 const users = require("../data/users");
 
-const userCheck = (req, res) => {
-  const { id } = req.params;
+let checkContainer = false;
 
+const userCheck = (req, res) => {
   for (let i = 0; i < users.length; i++) {
-    if (users[i]._id === id) {
-      res.status(200);
-      res.send(users[i]);
-      return;
-    }
-    res.status(404);
-    res.send({"message": "Нет пользователя с таким id"});
-    return;
-  }
+    if (users[i]._id === req.params.id) {
+      checkContainer = users[i]
+    }}
+    if (!checkContainer) {
+      res.send({"message": "Нет пользователя с таким id"});
+    } res.send(checkContainer);
 };
 
 module.exports = userCheck;
