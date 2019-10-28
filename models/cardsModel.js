@@ -9,7 +9,14 @@ const cardsSchema = new mongoose.Schema({
   },
   link: {
     type: String,
-    required: true
+    required: true,
+    validate: {
+      validator: function(urlStr) {
+        // eslint-disable-next-line no-useless-escape
+        return /(www\.)?([0-9]{3}\.[0-9]{3}\.[0-9]{3}\.[0-9]{3}|\w{1,}[\.]\w{1,})(:[0-9]{4})?\.+#?/.test(urlStr);
+      },
+      message: "Введен некорректный URL"
+    }
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

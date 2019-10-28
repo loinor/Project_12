@@ -1,11 +1,12 @@
 {
   "name": "project_12",
   "version": "1.0.0",
-  "description": "",
+  "description": "REST API training project with basics thing of operating database",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "mongo": "mongod"
   },
   "repository": {
     "type": "git",

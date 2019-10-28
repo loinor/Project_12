@@ -7,6 +7,6 @@ router.post("/cards", createCard);
 router.delete("/cards/:cardId", deleteCard);
 router.get("/users", getUsers);
 router.get("/users/:id", getUsersById);
-router.post("/users", createUsers)
+router.post("/users", createUsers);
 
 module.exports = router;
