@@ -1,0 +1,10 @@
+https://github.com/loinor/Project_12/pull/2/commits/4c03994aaf7920c1d1b3c0da1af66d566385d6be
+
+Не смог придумать как засунуть промисы в функцию, пытался сделать
+что-то вроде
+const cardReapet = () => {
+  .then(cards => res.send({data: cards}))
+  .catch(() => res.status(500).send({message: "Произошла ошибка"}));
+};
+Но выдает ошибку, не распознает . перед then, если омжно, маленький намек
+как это можно сделать
