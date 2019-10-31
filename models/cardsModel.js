@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
-const mongoose = require("mongoose");
-require("mongoose-type-url");
+const mongoose = require('mongoose');
+const validator = require('validator');
 
 const cardsSchema = new mongoose.Schema({
   name: {
@@ -10,16 +10,21 @@ const cardsSchema = new mongoose.Schema({
     maxlength: 30,
   },
   link: {
-    url: { type: mongoose.SchemaTypes.Url, required: true },
+    type: String,
+    requred: true,
+    validate: {
+      validator: (v) => validator.isURL(v),
+      message: (props) => `${props.value} Неверный URL`,
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
   },
   likes: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: "user",
+    ref: 'user',
     default: [],
   },
   createdAt: {
@@ -28,4 +33,4 @@ const cardsSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("card", cardsSchema);
+module.exports = mongoose.model('card', cardsSchema);

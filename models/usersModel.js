@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-unresolved
-require("mongoose-type-url");
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -15,7 +15,14 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
   },
-  avatar: { type: mongoose.SchemaTypes.Url, required: true },
+  avatar: {
+    type: String,
+    requred: true,
+    validate: {
+      validator: (v) => validator.isURL(v),
+      message: (props) => `${props.value} Неверный URL`,
+    },
+  },
 });
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model('user', userSchema);
