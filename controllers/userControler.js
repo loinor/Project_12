@@ -8,8 +8,13 @@ const getUsers = (req, res) => {
 
 const getUsersById = (req, res) => {
   User.findById(req.params.id)
-    .then((user) => res.send({ data: user }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .then((user) => {
+      if (!user) {
+        res.status(404).send({ message: 'Пользователь не найдет' });
+      } else {
+        res.send({ data: user });
+      }
+    });
 };
 
 const createUsers = (req, res) => {

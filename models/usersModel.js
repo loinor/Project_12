@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    requred: true,
+    required: true,
     validate: {
       validator: (v) => validator.isURL(v),
       message: (props) => `${props.value} Неверный URL`,
