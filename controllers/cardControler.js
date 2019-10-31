@@ -23,7 +23,8 @@ const deleteCard = ((req, res) => {
       } else {
         res.send({ data: user });
       }
-    });
+    })
+    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 });
 
 module.exports = {
