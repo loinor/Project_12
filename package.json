@@ -1,11 +1,12 @@
 {
   "name": "project_12",
   "version": "1.0.0",
-  "description": "",
+  "description": "REST API training project with basics thing of operating database",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "mongo": "mongod"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,9 @@
     "nodemon": "^1.19.3"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "eslint-plugin-import": "^2.18.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.7.5"
   }
 }

@@ -1,12 +1,12 @@
-const router = require("express").Router();
-const cardData = require("./cards");
-const userData = require("./users");
-const userCheck = require("./checkUsers");
-const pageCheck = require("./pagenotfound");
+const router = require('express').Router();
+const { getUsers, getUsersById, createUsers } = require('../controllers/userControler');
+const { getCards, createCard, deleteCard } = require('../controllers/cardControler');
 
-router.get("/cards", cardData);
-router.get("/users", userData);
-router.get("/users/:id", userCheck);
-router.get("/", pageCheck);
+router.get('/cards', getCards);
+router.post('/cards', createCard);
+router.delete('/cards/:cardId', deleteCard);
+router.get('/users', getUsers);
+router.get('/users/:id', getUsersById);
+router.post('/users', createUsers);
 
 module.exports = router;
