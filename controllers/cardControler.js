@@ -11,17 +11,22 @@ const createCard = ((req, res) => {
   const { name, link } = req.body;
 
   Card.create({ name, link, owner: req.user._id, likes: req.user._id })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.status(201).send({ data: card }))
     .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 });
 
 const deleteCard = ((req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
-    .then((user) => {
-      if (!user) {
-        res.status(404).send({ message: 'Пользователь не найдет' });
+    .then((card) => {
+      if (!card) {
+        res.status(404).send({ message: 'Карточка не найдена' });
       } else {
-        res.send({ data: user });
+        if (card.owner != req.user._id) {
+          res
+            .status(403)
+            .send({ message: 'Недостаточно прав для удаления карточки' });
+        }
+        res.send({ data: card });
       }
     })
     .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));

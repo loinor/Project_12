@@ -22,6 +22,11 @@ const getUsersById = (req, res) => {
 };
 
 const createUsers = (req, res) => {
+  if (!req.body.password) {
+    res
+      .status(400)
+      .send({ message: 'Введите пароль' });
+  }
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
       name: req.body.name,
@@ -29,7 +34,11 @@ const createUsers = (req, res) => {
       avatar: req.body.avatar,
       email: req.body.email,
       password: hash })
-      .then((user) => res.send({ data: user }))
+      .then((user) => res.status(201).send({
+        email: user.email,
+        about: user.about,
+        name: user.name,
+        avatar: user.avatar }))
       .catch(() => res.status(500).send({ message: 'Произошла ошибка' })));
 };
 
