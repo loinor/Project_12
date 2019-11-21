@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon app.js",
     "dev": "nodemon app.js",
-    "mongo": "mongod"
+    "mongo": "mongod",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.3"
   },
   "dependencies": {

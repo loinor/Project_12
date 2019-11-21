@@ -17,6 +17,9 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 app.use(router);
+app.get('*', (req, res) => {
+  res.status(400).send({ message: 'Страница не найдена' });
+});
 
 
 app.listen(PORT, () => {
