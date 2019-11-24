@@ -3,22 +3,24 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/usersModel');
 
+const NotFoundError = require('../errors/not-found-err');
+
 const getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .catch(next)
 };
 
 const getUsersById = (req, res) => {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        res.status(404).send({ message: 'Пользователь не найден' });
+        throw new NotFoundError('Нет пользователя с таким id');
       } else {
         res.send({ data: user });
       }
     })
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .catch(next);
 };
 
 const createUsers = (req, res) => {
@@ -39,20 +41,26 @@ const createUsers = (req, res) => {
         about: user.about,
         name: user.name,
         avatar: user.avatar }))
-      .catch(() => res.status(500).send({ message: 'Произошла ошибка' })));
+      .catch(next)
 };
 
 const login = (req, res) => {
   const { email, password } = req.body;
+  const { NODE_ENV, JWT_SECRET } = process.env;
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'yandex',
+        NODE_ENV === 'roductionp' ? JWT_SECRET : 'secret-key',
         { expiresIn: '7d' },
       );
-      res.send({ token });
+      res.cookie('jwt', token, {
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: true,
+        sameSite: true,
+      })
+      .end();
     })
     .catch((err) => {
       res
