@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 require('dotenv').config();
 
 const express = require('express');
@@ -38,10 +39,7 @@ app.get('*', (req, res) => {
   res.status(400).send({ message: 'Страница не найдена' });
 });
 
-app.use((err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err);
-  }
+app.use((err, req, res) => {
   const { statusCode = 500, message } = err;
   return res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
 });

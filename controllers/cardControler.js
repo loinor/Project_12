@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable object-curly-newline */
 const Card = require('../models/cardsModel');
 
@@ -24,7 +25,7 @@ const deleteCard = ((req, res) => {
       if (!card) {
         throw new NotFoundError('Нет карточки с таким id');
       } else {
-        if (card.owner != req.user._id) {
+        if (card.owner.toString() !== req.user._id.toString()) {
           throw new RightsError('Недостаточно прав');
         }
         res.send({ data: card });
