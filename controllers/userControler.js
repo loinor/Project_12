@@ -45,29 +45,15 @@ const createUsers = (req, res) => {
       .catch(next));
 };
 
-const login = (req, res) => {
-  const { email, password } = req.body;
+const login = (req, res, next) => {
   const { NODE_ENV, JWT_SECRET } = process.env;
-
+  const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        NODE_ENV === 'roductionp' ? JWT_SECRET : 'secret-key',
-        { expiresIn: '7d' },
-      );
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: true,
-      })
-        .end();
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+      res.send({ token });
     })
-    .catch((err) => {
-      res
-        .status(401)
-        .send({ message: err.message });
-    });
+    .catch(next);
 };
 
 module.exports = {
