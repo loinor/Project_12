@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable object-curly-newline */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -8,7 +9,7 @@ const NotFoundError = require('../errors/not-found-err');
 const getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(next)
+    .catch(next);
 };
 
 const getUsersById = (req, res) => {
@@ -41,7 +42,7 @@ const createUsers = (req, res) => {
         about: user.about,
         name: user.name,
         avatar: user.avatar }))
-      .catch(next)
+      .catch(next));
 };
 
 const login = (req, res) => {
@@ -60,7 +61,7 @@ const login = (req, res) => {
         httpOnly: true,
         sameSite: true,
       })
-      .end();
+        .end();
     })
     .catch((err) => {
       res

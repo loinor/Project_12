@@ -2,10 +2,11 @@
 require('dotenv').config();
 
 const express = require('express');
+const { errors } = require('celebrate');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const router = require('./routes/router');
-const { requestLogger, errorLoger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 // eslint-disable-next-line no-undef
 const { PORT = 3000 } = process.env;
@@ -31,7 +32,7 @@ app.get('/crash-test', () => {
 
 app.use(router);
 
-app.use(errorLoger);
+app.use(errorLogger);
 
 app.use(errors());
 
