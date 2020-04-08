@@ -1,24 +1,27 @@
+/* eslint-disable no-undef */
 /* eslint-disable object-curly-newline */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/usersModel');
 
+const NotFoundError = require('../errors/not-found-err');
+
 const getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .catch(next);
 };
 
 const getUsersById = (req, res) => {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        res.status(404).send({ message: 'Пользователь не найден' });
+        throw new NotFoundError('Нет пользователя с таким id');
       } else {
         res.send({ data: user });
       }
     })
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .catch(next);
 };
 
 const createUsers = (req, res) => {
@@ -39,26 +42,18 @@ const createUsers = (req, res) => {
         about: user.about,
         name: user.name,
         avatar: user.avatar }))
-      .catch(() => res.status(500).send({ message: 'Произошла ошибка' })));
+      .catch(next));
 };
 
-const login = (req, res) => {
+const login = (req, res, next) => {
+  const { NODE_ENV, JWT_SECRET } = process.env;
   const { email, password } = req.body;
-
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        'yandex',
-        { expiresIn: '7d' },
-      );
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch((err) => {
-      res
-        .status(401)
-        .send({ message: err.message });
-    });
+    .catch(next);
 };
 
 module.exports = {
